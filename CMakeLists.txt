@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.16)
+project(MiniStockExchange CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+if(MSVC)
+  add_compile_options(/W4)
+else()
+  add_compile_options(-Wall -Wextra -O2)
+endif()
+
+add_executable(exchange_server server/main.cpp)
+add_executable(test_core server/tests/test_core.cpp)
+if(WIN32)
+  target_link_libraries(exchange_server ws2_32)
+endif()
+
+enable_testing()
+add_test(NAME core COMMAND test_core)
